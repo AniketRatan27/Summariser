@@ -32,6 +32,7 @@ router.get("/api/products/:id/reviews", async (req: Request, res: Response) => {
       res.status(404).json({
          error: "Invalid productId. Please provide a valid numeric productId.",
       });
+      return;
    }
 
    const reviews = await prisma.review.findMany({
