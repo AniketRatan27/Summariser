@@ -7,9 +7,18 @@
       "dev": "bun run index.ts"
    },
    "devDependencies": {
-      "@types/bun": "latest"
+      "@types/bun": "latest",
+      "@types/node": "^25.0.2",
+      "prisma": "^7.1.0"
    },
    "peerDependencies": {
       "typescript": "^5"
+   },
+   "dependencies": {
+      "@mistralai/mistralai": "^1.10.0",
+      "@prisma/adapter-mariadb": "^7.1.0",
+      "@prisma/client": "^7.1.0",
+      "dotenv": "^17.2.3",
+      "zod": "^4.1.12"
    }
 }
