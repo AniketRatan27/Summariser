@@ -28,6 +28,12 @@ router.get("/api/products/:id/reviews", async (req: Request, res: Response) => {
    const prisma = new PrismaClient({ adapter });
    const productId = Number(req.params.id);
 
+   if (isNaN(productId)) {
+      res.status(404).json({
+         error: "Invalid productId. Please provide a valid numeric productId.",
+      });
+   }
+
    const reviews = await prisma.review.findMany({
       where: { productId },
       orderBy: { createdAt: "desc" },
