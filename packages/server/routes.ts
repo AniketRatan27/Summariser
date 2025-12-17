@@ -1,8 +1,6 @@
 import express from "express";
 import type { Response, Request } from "express";
-import { ChatController } from "./Controller/chat.controller";
-import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-import { PrismaClient } from "./generated/prisma";
+import { reviewController } from "./Controller/review.controller";
 
 const router = express.Router();
 
@@ -16,31 +14,10 @@ router.get("/", (req: Request, res: Response) => {
 
 // router.post("/api/chat", ChatController.sendMessage);
 
-const adapter = new PrismaMariaDb({
-   host: process.env.DATABASE_HOST,
-   user: process.env.DATABASE_USER,
-   password: process.env.DATABASE_PASSWORD,
-   database: process.env.DATABASE_NAME,
-   connectionLimit: 5,
-});
-
-router.get("/api/products/:id/reviews", async (req: Request, res: Response) => {
-   const prisma = new PrismaClient({ adapter });
-   const productId = Number(req.params.id);
-
-   if (isNaN(productId)) {
-      res.status(404).json({
-         error: "Invalid productId. Please provide a valid numeric productId.",
-      });
-      return;
-   }
-
-   const reviews = await prisma.review.findMany({
-      where: { productId },
-      orderBy: { createdAt: "desc" },
-   });
-
-   res.json(reviews);
-});
+router.get("/api/products/:id/reviews", reviewController.getReviews);
+router.post(
+   "/api/products/:id/reviews/summarize",
+   reviewController.summarizeReview
+);
 
 export default router;
