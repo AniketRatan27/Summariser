@@ -9,4 +9,10 @@ export const productRepository = {
          where: { id: productId },
       });
    },
+
+   getProductIds() {
+      return prisma.product.findMany({
+         select: { id: true },
+      });
+   },
 };
