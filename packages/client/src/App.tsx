@@ -1,9 +1,13 @@
-import ChatBot from "./components/Chat/ChatBot";
+import { useState } from "react";
+import ProductList from "./components/Product/ProductList";
+import ReviewList from "./components/Review/ReviewList";
 
 function App() {
+   const [pId, setPId] = useState<number | undefined>(undefined);
    return (
       <div className="p-4 h-screen w-full">
-         <ChatBot />
+         <ProductList onSelectProductId={setPId} />
+         {pId !== undefined && <ReviewList productId={pId} />}
       </div>
    );
 }
