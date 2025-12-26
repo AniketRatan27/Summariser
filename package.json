@@ -12,6 +12,7 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@types/express": "^5.0.3",
+    "baseline-browser-mapping": "^2.9.11",
     "concurrently": "^9.2.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.3",

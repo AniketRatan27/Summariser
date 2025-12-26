@@ -1,14 +1,12 @@
 import dayjs from "dayjs";
 import { PrismaClient, type Review } from "../generated/prisma";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-import { da } from "zod/locales";
 
 export const adapter = new PrismaMariaDb({
    host: process.env.DATABASE_HOST,
    user: process.env.DATABASE_USER,
    password: process.env.DATABASE_PASSWORD,
    database: process.env.DATABASE_NAME,
-   connectionLimit: 5,
 });
 
 const prisma = new PrismaClient({ adapter });
@@ -23,7 +21,7 @@ export const reviewRepository = {
 
    async storeReviewSummary(productId: number, summary: string) {
       const now = new Date();
-      const expiresAt = dayjs().add(7, "days").toDate();
+      const expiresAt = dayjs().add(1, "days").toDate();
       const data = {
          content: summary,
          expiresAt,
