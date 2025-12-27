@@ -1,5 +1,5 @@
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-import { PrismaClient } from "./generated/prisma";
+import { PrismaClient } from "../generated/prisma";
 
 // SAME adapter pattern as your repositories
 const adapter = new PrismaMariaDb({
