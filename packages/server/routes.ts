@@ -9,12 +9,6 @@ router.get("/", (req: Request, res: Response) => {
    res.send("Hello World! ");
 });
 
-// router.get("/api/hello", (req: Request, res: Response) => {
-//    res.send({ message: "Hello World!" });
-// });
-
-// router.post("/api/chat", ChatController.sendMessage);
-
 router.get("/api/products", async (req, res) => {
    const productIds = await productRepository.getProductIds();
    res.json(productIds);
