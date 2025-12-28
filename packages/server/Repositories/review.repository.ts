@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
-import { type Review } from "../generated/prisma";
 import { prisma } from "../lib/prisma";
+import type { Review } from "../lib/generated/prisma/client";
 
 export const reviewRepository = {
    async getReviews(productId: number, limit?: number): Promise<Review[]> {

@@ -2,7 +2,6 @@ import type { Request, Response } from "express";
 import { reviewService } from "../services/review.service";
 import { productRepository } from "../Repositories/product.repository";
 import { reviewRepository } from "../Repositories/review.repository";
-import { error } from "node:console";
 
 export const reviewController = {
    async getReviews(req: Request, res: Response) {
