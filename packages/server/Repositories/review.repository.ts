@@ -1,15 +1,7 @@
 import dayjs from "dayjs";
-import { PrismaClient, type Review } from "../generated/prisma";
-import { PrismaMariaDb } from "@prisma/adapter-mariadb";
+import { type Review } from "../generated/prisma";
+import { prisma } from "../lib/prisma";
 
-export const adapter = new PrismaMariaDb({
-   host: process.env.DATABASE_HOST,
-   user: process.env.DATABASE_USER,
-   password: process.env.DATABASE_PASSWORD,
-   database: process.env.DATABASE_NAME,
-});
-
-const prisma = new PrismaClient({ adapter });
 export const reviewRepository = {
    async getReviews(productId: number, limit?: number): Promise<Review[]> {
       return prisma.review.findMany({

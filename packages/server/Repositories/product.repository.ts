@@ -1,7 +1,5 @@
 import { PrismaClient } from "../generated/prisma";
-import { adapter } from "./review.repository";
-
-const prisma = new PrismaClient({ adapter: adapter });
+import { prisma } from "../lib/prisma";
 
 export const productRepository = {
    getProduct(productId: number) {
