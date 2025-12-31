@@ -10,20 +10,40 @@ jobs:
       runs-on: ubuntu-latest
 
       steps:
+         # 1️⃣ Checkout the code
          - name: Checkout code
            uses: actions/checkout@v4
 
+         # 2️⃣ Setup SSH with debug
          - name: Setup SSH
            run: |
+              echo "Setting up SSH..."
               mkdir -p ~/.ssh
               echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
               chmod 600 ~/.ssh/id_rsa
-              ssh-keyscan -t rsa ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
+              # Add EC2 host to known_hosts with debug
+              echo "Adding EC2 host key to known_hosts..."
+              ssh-keyscan -t rsa ${{ secrets.EC2_HOST }} 2>&1 | tee -a ~/.ssh/known_hosts
+
+              echo "Contents of known_hosts:"
+              cat ~/.ssh/known_hosts
+
+         # 3️⃣ Test SSH connection before deployment
+         - name: Test SSH connection
+           run: |
+              echo "Testing SSH connection to EC2..."
+              ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "echo 'SSH connection successful!'"
+
+         # 4️⃣ Deploy code on EC2
          - name: Deploy on EC2
            run: |
-              ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-                cd ~/Summariser
+              echo "Starting deployment..."
+              ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+                cd ~/Summariser || exit 1
+                echo "Pulling latest code..."
                 git pull origin main
-                pm2 restart all
+                echo "Restarting PM2 processes..."
+                pm2 restart all || pm2 start dist/index.js --name summariser
+                echo "Deployment complete!"
               EOF
