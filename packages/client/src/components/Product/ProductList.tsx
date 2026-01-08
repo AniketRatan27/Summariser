@@ -22,7 +22,9 @@ const ProductList = ({ onSelectProductId }: Props) => {
 
    return (
       <div>
-         <h3>Product IDs</h3>
+         <h3 className="p-2 text-2xl font-serif border-2 border-b-black">
+            Product IDs
+         </h3>
          <ul className="flex flex-row gap-5 mt-4 mb-4">
             {data?.map((product) => (
                <li
