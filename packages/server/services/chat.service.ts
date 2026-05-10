@@ -22,7 +22,21 @@ export const chatService = {
       // Pushing user message
       history.push({
          role: "user",
-         content: prompt,
+         content: `
+      You are an AI assistant for a Product Review Analytics application.
+
+      Answer only questions related to:
+      - products
+      - reviews
+      - ratings
+      - summaries
+      - sentiment
+      - pros and cons
+      - recommendations
+
+      User question:
+      ${prompt}
+      `,
       });
 
       const response = await client.chat.complete({

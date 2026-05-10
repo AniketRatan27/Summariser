@@ -1,15 +1,23 @@
-import { prisma } from "../lib/prisma";
+import { prismaConnection } from "../lib/prismaConnection";
 
 export const productRepository = {
    getProduct(productId: number) {
-      return prisma.product.findUnique({
+      return prismaConnection.product.findUnique({
          where: { id: productId },
       });
    },
 
-   getProductIds() {
-      return prisma.product.findMany({
-         select: { id: true },
+   getProducts() {
+      return prismaConnection.product.findMany({
+         select: {
+            id: true,
+            name: true,
+            description: true,
+            price: true,
+         },
+         orderBy: {
+            id: "asc",
+         },
       });
    },
 };

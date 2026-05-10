@@ -8,13 +8,12 @@
     "dev": "bun --watch run index.ts",
     "format": "prettier --write .",
     "prepare": "husky",
-    "migrate": "bunx prisma migrate deploy",
     "seed": "bun run seed.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/express": "^5.0.3",
-    "baseline-browser-mapping": "^2.9.11",
+    "baseline-browser-mapping": "^2.10.0",
     "concurrently": "^9.2.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.3",

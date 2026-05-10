@@ -1,8 +1,7 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
   provider = "prisma-client"
@@ -20,18 +19,20 @@ model Product {
   price       Float
   reviews     Review[]
   summary     Summary?
+  insight     ProductInsight?
 
   @@map("products")
 }
 
 model Review {
-  id        Int      @id @default(autoincrement())
-  author    String   @db.VarChar(255)
-  rating    Int      @db.TinyInt
-  content   String   @db.Text
-  createdAt DateTime @default(now())
+  id        Int             @id @default(autoincrement())
+  author    String          @db.VarChar(255)
+  rating    Int             @db.TinyInt
+  content   String          @db.Text
+  createdAt DateTime        @default(now())
   productId Int
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product         @relation(fields: [productId], references: [id])
+  analysis  ReviewAnalysis?
 
   @@map("reviews")
 }
@@ -45,4 +46,27 @@ model Summary {
   expiresAt   DateTime
 
   @@map("summaries")
+}
+
+model ReviewAnalysis {
+  id        Int      @id @default(autoincrement())
+  reviewId Int      @unique
+  review   Review   @relation(fields: [reviewId], references: [id])
+  sentiment String   @db.VarChar(50)
+  keywords  String?  @db.Text
+  createdAt DateTime @default(now())
+
+  @@map("review_analysis")
+}
+
+model ProductInsight {
+  id             Int      @id @default(autoincrement())
+  productId      Int      @unique
+  product        Product  @relation(fields: [productId], references: [id])
+  pros           String   @db.Text
+  cons           String   @db.Text
+  recommendation String   @db.Text
+  generatedAt    DateTime @default(now())
+
+  @@map("product_insights")
 }

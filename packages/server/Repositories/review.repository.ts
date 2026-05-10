@@ -1,13 +1,19 @@
 import dayjs from "dayjs";
-import { prisma } from "../lib/prisma";
+import { prismaConnection } from "../lib/prismaConnection";
 import type { Review } from "../lib/generated/prisma/client";
 
 export const reviewRepository = {
-   async getReviews(productId: number, limit?: number): Promise<Review[]> {
-      return prisma.review.findMany({
-         where: { productId },
+   async getReviews(
+      productId: number,
+      options?: { limit?: number; rating?: number }
+   ): Promise<Review[]> {
+      return prismaConnection.review.findMany({
+         where: {
+            productId,
+            ...(options?.rating ? { rating: options.rating } : {}),
+         },
          orderBy: { createdAt: "desc" },
-         take: limit,
+         take: options?.limit,
       });
    },
 
@@ -20,7 +26,7 @@ export const reviewRepository = {
          generatedAt: now,
          productId,
       };
-      return prisma.summary.upsert({
+      return prismaConnection.summary.upsert({
          where: { productId },
          create: data,
          update: data,
@@ -28,7 +34,7 @@ export const reviewRepository = {
    },
 
    async getReviewSummary(productId: number): Promise<string | null> {
-      const summary = await prisma.summary.findFirst({
+      const summary = await prismaConnection.summary.findFirst({
          where: {
             AND: [{ productId }, { expiresAt: { gt: new Date() } }],
          },
