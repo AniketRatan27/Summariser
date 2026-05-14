@@ -43,7 +43,7 @@ export const chatService = {
          model: "mistral-large-latest",
          messages: history,
          temperature: 0.2,
-         maxTokens: 50,
+         maxTokens: 250,
       });
 
       // Extracting the assistant message to check if there exists messages

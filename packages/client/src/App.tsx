@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ProductList from "./components/Product/ProductList";
 import ReviewList from "./components/Review/ReviewList";
+import ChatWidget from "./components/Chat/ChatWidget";
 import { HiSparkles } from "react-icons/hi";
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
                </div>
             </div>
          </div>
+         <ChatWidget />
       </div>
    );
 }
