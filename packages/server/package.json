@@ -4,7 +4,10 @@
    "type": "module",
    "private": true,
    "scripts": {
-      "dev": "bun run index.ts"
+      "dev": "bun run index.ts",
+      "start": "bun run index.ts",
+      "seed": "bun run seed.ts",
+      "prisma:generate": "bunx prisma generate"
    },
    "devDependencies": {
       "@types/bun": "latest",
