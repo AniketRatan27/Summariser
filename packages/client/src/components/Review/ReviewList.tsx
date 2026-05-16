@@ -1,4 +1,4 @@
-import axios from "axios";
+import { api } from "../../lib/axios";
 import StarRating from "./StarRating";
 import { HiSparkles } from "react-icons/hi";
 import { useQuery } from "@tanstack/react-query";
@@ -64,7 +64,7 @@ const ReviewList = ({ productId }: Props) => {
          ? `/api/products/${productId}/reviews?rating=${selectedRating}`
          : `/api/products/${productId}/reviews`;
 
-      const { data } = await axios.get<GetReviewResponse>(url);
+      const { data } = await api.get<GetReviewResponse>(url);
       return data;
    };
 
@@ -82,7 +82,7 @@ const ReviewList = ({ productId }: Props) => {
          setIsSummaryLoading(true);
          setSummaryError("");
 
-         const { data } = await axios.post<SummariseResponse>(
+         const { data } = await api.post<SummariseResponse>(
             `/api/products/${productId}/reviews/summarize`
          );
 

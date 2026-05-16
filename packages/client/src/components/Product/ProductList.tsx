@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { api } from "../../lib/axios";
 
 type Product = {
    id: number;
@@ -15,7 +15,7 @@ type Props = {
 
 const ProductList = ({ selectedProductId, onSelectProductId }: Props) => {
    const fetchProducts = async (): Promise<Product[]> => {
-      const { data } = await axios.get<Product[]>("/api/products");
+      const { data } = await api.get<Product[]>("/api/products");
       return data;
    };
 

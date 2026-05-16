@@ -1,4 +1,4 @@
-import axios from "axios";
+import { api } from "../../lib/axios";
 import { useState } from "react";
 import { HiSparkles } from "react-icons/hi";
 import { Button } from "../ui/button";
@@ -41,7 +41,7 @@ const AnalyticsPanel = ({ productId }: Props) => {
          setLoading(true);
          setError("");
 
-         const { data } = await axios.post<AnalyticsResponse>(
+         const { data } = await api.post<AnalyticsResponse>(
             `/api/products/${productId}/analyze`
          );
 

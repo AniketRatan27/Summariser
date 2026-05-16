@@ -1,4 +1,4 @@
-import axios from "axios";
+import { api } from "../../lib/axios";
 import { BiSolidSend } from "react-icons/bi";
 import { GoEyeClosed } from "react-icons/go";
 import { IoWarningOutline } from "react-icons/io5";
@@ -41,7 +41,7 @@ const ChatBot = () => {
          setError("");
          reset({ prompt: "" });
          // console.log(data);
-         const { data } = await axios.post<ChatResponse>("/api/chat", {
+         const { data } = await api.post<ChatResponse>("/api/chat", {
             prompt,
             userId: conversationId.current,
          });
