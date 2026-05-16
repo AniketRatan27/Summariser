@@ -14,6 +14,10 @@ export const reviewService = {
          limit: 15,
       });
 
+      if (!reviews.length) {
+         return "No reviews available for summarization.";
+      }
+
       const joinedReviews = reviews
          .map(
             (r) => `
@@ -26,25 +30,27 @@ Review: ${r.content}
       const prompt = `
 You are an AI product review analyst.
 
-Analyze the following customer reviews and return the response in this exact format:
+Analyze the following customer reviews and generate a clear product review summary.
 
-Overall Summary:
-Write 2-3 lines summarizing the product experience.
+Return the response ONLY in markdown format using the exact structure below.
 
-What Customers Like:
+## Overall Summary
+Write 2-3 lines summarizing the overall customer experience.
+
+## What Customers Like
 * Point 1
 * Point 2
 * Point 3
 
-What Customers Dislike:
+## What Customers Dislike
 * Point 1
 * Point 2
 * Point 3
 
-Final Verdict:
+## Final Verdict
 Write one clear recommendation sentence.
 
-Reviews:
+Customer Reviews:
 ${joinedReviews}
 `;
 
@@ -55,8 +61,10 @@ ${joinedReviews}
          maxTokens: 700,
       });
 
-      await reviewRepository.storeReviewSummary(productId, response);
+      const cleanedResponse = response.trim();
 
-      return response;
+      await reviewRepository.storeReviewSummary(productId, cleanedResponse);
+
+      return cleanedResponse;
    },
 };

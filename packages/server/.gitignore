@@ -36,7 +36,10 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 /generated/prisma
 
 /lib/generated/prisma
+<<<<<<< HEAD
 
 /lib/generated/prisma
 
 /lib/generated/prisma
+=======
+>>>>>>> 2efa555a6b2ca72d4a651e02fa707dc2234ebb45

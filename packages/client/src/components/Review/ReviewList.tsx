@@ -89,7 +89,7 @@ const ReviewList = ({ productId }: Props) => {
          setSummary(data.summary);
       } catch (error) {
          console.error(error);
-         setSummaryError("Could not summarise the reviews. Try again.");
+         setSummaryError("Could not summarize the reviews. Try again.");
       } finally {
          setIsSummaryLoading(false);
       }
@@ -146,30 +146,35 @@ const ReviewList = ({ productId }: Props) => {
             <h2 className="text-2xl font-bold text-gray-900">
                {reviewData.product.name}
             </h2>
-            <p className="text-gray-600 mt-1">
+
+            <p className="mt-1 text-gray-600">
                {reviewData.product.description}
             </p>
-            <p className="font-semibold mt-3 text-lg">
+
+            <p className="mt-3 text-lg font-semibold">
                ₹ {reviewData.product.price}
             </p>
          </div>
 
-         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+         <div className="mb-5 grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="rounded-2xl border bg-white p-5 shadow-sm">
                <p className="text-sm text-gray-500">Average Rating</p>
-               <div className="flex items-center gap-3 mt-2">
+
+               <div className="mt-2 flex items-center gap-3">
                   <p className="text-4xl font-bold text-gray-900">
                      {averageRating}
                   </p>
+
                   <StarRating value={Math.round(Number(averageRating))} />
                </div>
-               <p className="text-sm text-gray-500 mt-2">
+
+               <p className="mt-2 text-sm text-gray-500">
                   Based on {reviewData.reviews.length} reviews
                </p>
             </div>
 
             <div className="rounded-2xl border bg-white p-5 shadow-sm">
-               <p className="text-sm text-gray-500 mb-3">Rating Distribution</p>
+               <p className="mb-3 text-sm text-gray-500">Rating Distribution</p>
 
                <div className="space-y-2">
                   {ratingCounts.map((item) => (
@@ -204,9 +209,10 @@ const ReviewList = ({ productId }: Props) => {
 
          <div className="mb-5">
             {currentSummary ? (
-               <div className="rounded-2xl border p-5 bg-blue-50 shadow-sm">
-                  <h3 className="font-bold mb-2">AI Summary</h3>
-                  <div className="prose prose-sm max-w-none">
+               <div className="min-w-0 overflow-hidden rounded-2xl border bg-gradient-to-r from-blue-50 to-indigo-50 p-5 shadow-sm">
+                  <h3 className="mb-2 font-bold">AI Summary</h3>
+
+                  <div className="prose prose-sm max-w-none overflow-hidden break-words whitespace-normal [&_*]:break-words">
                      <ReactMarkdown>{currentSummary}</ReactMarkdown>
                   </div>
                </div>
@@ -217,11 +223,13 @@ const ReviewList = ({ productId }: Props) => {
                      className="cursor-pointer"
                      disabled={isSummaryLoading}
                   >
-                     <HiSparkles /> Summarize
+                     <HiSparkles />
+                     Generate AI Summary
                   </Button>
 
                   <div className="py-3.5">
                      {isSummaryLoading && <ReviewSkeleton />}
+
                      {summaryError && (
                         <p className="text-red-600">{summaryError}</p>
                      )}
@@ -232,7 +240,7 @@ const ReviewList = ({ productId }: Props) => {
 
          <AnalyticsPanel productId={productId} />
 
-         <div className="flex gap-2 mb-5 flex-wrap">
+         <div className="mb-5 flex flex-wrap gap-2">
             <Button
                variant={!selectedRating ? "default" : "outline"}
                onClick={() => setSelectedRating(undefined)}
@@ -255,6 +263,8 @@ const ReviewList = ({ productId }: Props) => {
             <p className="text-gray-500">No reviews found for this rating.</p>
          ) : (
             <>
+               <h3 className="mb-4 text-xl font-bold">Customer Reviews</h3>
+
                <div className="flex flex-col gap-5">
                   {paginatedReviews.map((review) => (
                      <div
@@ -262,16 +272,22 @@ const ReviewList = ({ productId }: Props) => {
                         className="rounded-2xl border bg-white p-5 shadow-sm"
                      >
                         <div className="font-semibold">{review.author}</div>
+
+                        <p className="mt-1 text-xs text-gray-500">
+                           {new Date(review.createdAt).toLocaleDateString()}
+                        </p>
+
                         <div className="mt-1">
                            <StarRating value={review.rating} />
                         </div>
+
                         <p className="py-2 text-gray-700">{review.content}</p>
                      </div>
                   ))}
                </div>
 
                {totalPages > 1 && (
-                  <div className="flex items-center justify-between mt-6">
+                  <div className="mt-6 flex items-center justify-between">
                      <Button
                         variant="outline"
                         disabled={page === 1}
