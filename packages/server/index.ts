@@ -10,8 +10,12 @@ const app = express();
 
 app.use(
    cors({
-      origin: ["http://localhost:5173", "http://13.48.203.65:3000"],
-      methods: ["GET", "POST", "PUT", "DELETE"],
+      origin: [
+         "http://localhost:5173",
+         "https://main.d1uwh359jrlkq.amplifyapp.com",
+         "https://insightlens.duckdns.org",
+      ],
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       credentials: true,
    })
 );
